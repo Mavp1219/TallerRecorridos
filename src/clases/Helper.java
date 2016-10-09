@@ -268,9 +268,23 @@ public class Helper {
         nc = m[0].length;
         aux = aux + Helper.recorridoHaciaArriba(m, 0, nf-1, 0);
         aux = aux + Helper.recorridoDiagonalPrincipalAbajo(m, 1, nf/2);
+        aux = aux + Helper.recorridoDiagonalSecundariaArriba(m, nc/2, nc-1);
     return aux;
     }
     
+    
+    public static String recorrido2(JTable tabla1){
+    int m[][],nf,nc;
+        m = pasarDatosMatriz(tabla1);
+        String aux = "";
+        nf = m.length;
+        nc = m[0].length;
+        aux = aux + Helper.recorridoHaciaArriba(m, 0, nf-1, 0);
+        aux = aux + Helper.recorridoHaciaDerecha(m, 0, 1, nc/2);
+        aux = aux + Helper.recorridoHaciaAbajo(m, nc/2, nc/2-1, nf/2-1);
+        
+        return aux;
+    }
    
     
 }

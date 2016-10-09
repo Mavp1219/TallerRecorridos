@@ -230,7 +230,7 @@ public class Principal extends javax.swing.JFrame {
                 txtResultado.setText(Helper.recorrido4(tblMatrizInicial));
                 break;
             case 2:
-                txtResultado.setText(Helper.recorrido5(tblMatrizInicial));
+                txtResultado.setText(Helper.recorrido2(tblMatrizInicial));
                 break;
         }
         
