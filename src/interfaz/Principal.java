@@ -57,8 +57,9 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jLabel1.setText("RECORRIDOS MATRICES");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(257, 24, 200, 40));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(177, 24, 280, 40));
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Iniciales"));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -76,7 +77,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Opciones"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cmbOperaciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Recorrido 1", "Recorrido 2", "Recorrido 3" }));
+        cmbOperaciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Recorrido 1", "Recorrido 2", "Recorrido 3", "Recorrido 4", "Recorrido 5" }));
         jPanel2.add(cmbOperaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 130, 30));
 
         cmdCrear.setText("Crear");
@@ -138,10 +139,10 @@ public class Principal extends javax.swing.JFrame {
         txtResultado.setRows(5);
         jScrollPane1.setViewportView(txtResultado);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 370, 300, 120));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 440, 120));
 
         jLabel2.setText("Resultado = ");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 410, 90, 40));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 90, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 500));
 
@@ -224,16 +225,22 @@ public class Principal extends javax.swing.JFrame {
         nc = tblMatrizInicial.getColumnCount();
         switch (op) {
             case 0:
-            txtResultado.setText(Helper.recorrido1(tblMatrizInicial));
-            break;
-            case 1:
-                txtResultado.setText(Helper.recorrido5(tblMatrizInicial));
+                txtResultado.setText(Helper.recorrido1(tblMatrizInicial));
                 break;
-            case 2:
+            case 1:
                 txtResultado.setText(Helper.recorrido2(tblMatrizInicial));
                 break;
+            case 2:
+                txtResultado.setText(Helper.recorrido3(tblMatrizInicial));
+                break;
+            case 3:
+                txtResultado.setText(Helper.recorrido4(tblMatrizInicial));
+                break;
+            case 4:
+                txtResultado.setText(Helper.recorrido5(tblMatrizInicial));
+                break;
         }
-        
+
         JButton botonesH[] = {cmdOperacion, cmdLimpiar};
         JButton botonesD[] = {cmdCrear, cmdLlenadoAutomatico, cmdLlenadoManual};
         Helper.habilitarBotones(botonesH);
