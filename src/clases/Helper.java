@@ -253,12 +253,14 @@ public class Helper {
         nc = m[0].length;
         aux = aux + Helper.recorridoHaciaArriba(m, 0, nf - 1, 0);
         aux = aux + Helper.recorridoHaciaDerecha(m, 0, 1, nc / 2 );
-        aux = aux + Helper.recorridoHaciaAbajo(m, nc/2, 1, nf);
-        aux = aux + Helper.recorridoHaciaDerecha(m, nc/2, nf-1, nc-1);
-        aux = aux + Helper.recorridoHaciaArriba(m, 0, nc, nf-1);
+        aux = aux + Helper.recorridoHaciaAbajo(m, nc/2, 1, nf-1);
+        aux = aux + Helper.recorridoHaciaDerecha(m, nf-1, nc/2-1, nc-1);
+         aux = aux + Helper.recorridoHaciaArriba(m, nc-1, nf-2, 0);
         aux = aux.substring(0, aux.length() - 2);
         return aux;
     }
+    
+
 
     
     public static String recorrido3(JTable tabla1) {
@@ -267,6 +269,16 @@ public class Helper {
         String aux = "";
         nf = m.length;
         nc = m[0].length;
+        aux = aux + Helper.recorridoHaciaDerecha(m, nf/2, nc/2, (nc/2+1));
+        aux = aux + Helper.recorridoHaciaAbajo(m, (nc/2+1), nf/2+1, nf/2+1);
+        aux = aux + Helper.recorridoHaciaIzquierda(m, (nf/2+1), nc/2, (nc/2-1));
+        aux = aux + Helper.recorridoHaciaArriba(m, nc/2-1, nf/2, nf/2-1);
+        aux = aux + Helper.recorridoHaciaDerecha(m, nf/2-1, nc/2, nc-1);
+        aux = aux + Helper.recorridoHaciaAbajo(m, nc-1, nf/2, nf-1);
+        aux = aux + Helper.recorridoHaciaIzquierda(m, nf-1, nc/2+1, 0);
+        aux = aux + Helper.recorridoHaciaArriba(m, 0, nf/2+1, 0);
+        aux = aux + Helper.recorridoHaciaDerecha(m, 0, nc/2-1, nc-1);
+        aux = aux.substring(0, aux.length() - 2) + ".";
         return aux;
     }
     

@@ -21,6 +21,11 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        JButton botonesH[] = {cmdCrear, cmdLimpiar};
+        JButton botonesD[] = {cmdLlenadoAutomatico, cmdLlenadoManual, cmdOperacion};
+        txtNumeroFilas.requestFocusInWindow();
+        Helper.habilitarBotones(botonesH);
+        Helper.deshabilitarBotones(botonesD);
     }
 
     /**
@@ -40,7 +45,7 @@ public class Principal extends javax.swing.JFrame {
         txtNumeroFilas = new javax.swing.JTextField();
         txtNumeroColumnas = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        cmbOperaciones = new javax.swing.JComboBox<>();
+        cmbOperacion = new javax.swing.JComboBox<>();
         cmdCrear = new javax.swing.JButton();
         cmdLlenadoManual = new javax.swing.JButton();
         cmdLlenadoAutomatico = new javax.swing.JButton();
@@ -48,9 +53,9 @@ public class Principal extends javax.swing.JFrame {
         cmdLimpiar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblMatrizInicial = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtResultado = new javax.swing.JTextArea();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -69,16 +74,16 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel7.setText("Número de Filas: ");
         jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, 20));
-        jPanel5.add(txtNumeroFilas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 30, -1));
-        jPanel5.add(txtNumeroColumnas, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 30, -1));
+        jPanel5.add(txtNumeroFilas, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 30, -1));
+        jPanel5.add(txtNumeroColumnas, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 30, -1));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 360, 70));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Opciones"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cmbOperaciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Recorrido 1", "Recorrido 2", "Recorrido 3", "Recorrido 4", "Recorrido 5" }));
-        jPanel2.add(cmbOperaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 130, 30));
+        cmbOperacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Recorrido 1", "Recorrido 2", "Recorrido 3", "Recorrido 4", "Recorrido 5" }));
+        jPanel2.add(cmbOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 130, 30));
 
         cmdCrear.setText("Crear");
         cmdCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -135,32 +140,73 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 360, 200));
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Resultado"));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         txtResultado.setColumns(20);
         txtResultado.setRows(5);
         jScrollPane1.setViewportView(txtResultado);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 440, 120));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 16, 410, 90));
 
-        jLabel2.setText("Resultado = ");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 90, 40));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 430, 110));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 500));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 630, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCrearActionPerformed
-        DefaultTableModel tm;
-        int nf, nc;
-        tm = (DefaultTableModel) tblMatrizInicial.getModel();
-        nf = Integer.parseInt(txtNumeroFilas.getText());
-        nc = Integer.parseInt(txtNumeroColumnas.getText());
-        tm.setRowCount(nf);
-        tm.setColumnCount(nc);
-        JButton botonesH[] = {cmdLlenadoAutomatico, cmdLlenadoManual, cmdLimpiar};
-        JButton botonesD[] = {cmdCrear, cmdOperacion};
-        Helper.habilitarBotones(botonesH);
-        Helper.deshabilitarBotones(botonesD);
+        try {
+            if (txtNumeroFilas.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Elementos de la fila Vacios");
+                txtNumeroFilas.selectAll();
+                txtNumeroFilas.requestFocusInWindow();
+            }
+            if (txtNumeroColumnas.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Elementos de la columna Vacios");
+                txtNumeroColumnas.selectAll();
+                txtNumeroColumnas.requestFocusInWindow();
+            } else {
+                DefaultTableModel tm;
+                int nf, nc;
+                tm = (DefaultTableModel) tblMatrizInicial.getModel();
+                nf = Integer.parseInt(txtNumeroFilas.getText());
+                nc = Integer.parseInt(txtNumeroColumnas.getText());
+                tm.setRowCount(nf);
+                tm.setColumnCount(nc);
+                if (nf >= 7 && nc >= 7) {
+                    Helper.mensaje(this, "La matriz se pasa de lo establecido", "Error", 2);
+                    Helper.tablaPorDefecto(tblMatrizInicial);
+                    txtNumeroFilas.setText("");
+                    txtNumeroColumnas.setText("");
+                    txtNumeroFilas.requestFocusInWindow();
+                }
+                if (nf <= 3 && nc <= 3) {
+                    Helper.mensaje(this, "La matriz es demasiado pequeña", "Error", 2);
+                    Helper.tablaPorDefecto(tblMatrizInicial);
+                    txtNumeroFilas.setText("");
+                    txtNumeroColumnas.setText("");
+                    txtNumeroFilas.requestFocusInWindow();
+                } else {
+                    tm.setRowCount(nf);
+                    tm.setColumnCount(nc);
+                    txtNumeroColumnas.setEditable(false);
+                    txtNumeroFilas.setEditable(false);
+                    JButton botonesH[] = {cmdLlenadoAutomatico, cmdLlenadoManual, cmdLimpiar};
+                    JButton botonesD[] = {cmdCrear, cmdOperacion};
+                    Helper.habilitarBotones(botonesH);
+                    Helper.deshabilitarBotones(botonesD);
+                }
+            }
+        } catch (NumberFormatException e) {
+            Helper.mensaje(this, "Ingrese bien los datos", "Error", 2);
+            txtNumeroFilas.setText("");
+            txtNumeroColumnas.setText("");
+            txtNumeroFilas.requestFocusInWindow();
+        }
+
+
     }//GEN-LAST:event_cmdCrearActionPerformed
 
     private void cmdLlenadoManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLlenadoManualActionPerformed
@@ -220,7 +266,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void cmdOperacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdOperacionActionPerformed
         int op, nf, nc, pares, aux;
-        op = cmbOperaciones.getSelectedIndex();
+        op = cmbOperacion.getSelectedIndex();
         nf = tblMatrizInicial.getRowCount();
         nc = tblMatrizInicial.getColumnCount();
         switch (op) {
@@ -252,8 +298,10 @@ public class Principal extends javax.swing.JFrame {
         txtNumeroFilas.setText("");
         txtNumeroColumnas.setText("");
         txtNumeroFilas.requestFocusInWindow();
-        cmbOperaciones.setSelectedIndex(0);
+        cmbOperacion.setSelectedIndex(0);
         txtResultado.setText("");
+        txtNumeroColumnas.setEditable(false);
+       txtNumeroFilas.setEditable(false);
         JButton botonesH[] = {cmdCrear, cmdLimpiar};
         JButton botonesD[] = {cmdLlenadoAutomatico, cmdLlenadoManual, cmdOperacion};
         Helper.habilitarBotones(botonesH);
@@ -296,18 +344,18 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cmbOperaciones;
+    private javax.swing.JComboBox<String> cmbOperacion;
     private javax.swing.JButton cmdCrear;
     private javax.swing.JButton cmdLimpiar;
     private javax.swing.JButton cmdLlenadoAutomatico;
     private javax.swing.JButton cmdLlenadoManual;
     private javax.swing.JButton cmdOperacion;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
